@@ -19,7 +19,6 @@ Aplikace se skládá z:
 - **Databáze**: SQLite - Jednoduchá, lehká databáze ideální pro malé projekty, kde není potřeba komplexní správa dat.
 - **Desktop aplikace**: Electron + React + ShadCN - Pro zajištění přehledné a uživatelsky přívětivé správy úkolů je použita Electronová aplikace, která běží na Reactu.
 
-
 ## Hlavní funkce
 
 - **Přihlášení a účast v kvízu**: Uživatelé mohou soutěžit v jednoduchém kvízu a za každou správnou odpověď získat bod.
@@ -48,4 +47,43 @@ TODO: OBRÁZEK VYTVÁŘENÍ KVÍZU
 
 ## Instalace a spuštění
 
-TODO: INSTALACE
+1. **Frontend (Webová aplikace)**:
+   - Přejděte do adresáře `Quizzical-Web`:
+     ```bash
+     cd .\Quizzical-Web
+     ```
+   - Nainstalujte potřebné balíčky pomocí npm (verze 22.2.20):
+     ```bash
+     npm install
+     ```
+   - Spusťte vývojový server:
+     ```bash
+     npm run dev
+     ```
+
+2. **Backend (Server)**:
+   - Ujistěte se, že máte nainstalované .NET 8 SDK.
+   - Přejděte do adresáře `Quizzical-Server`:
+     ```bash
+     cd .\Quizzical-Server
+     ```
+   - Spusťte server:
+     ```bash
+     dotnet run
+     ```
+
+3. **Desktopová aplikace**:
+   - Přejděte do adresáře `Quizzical-Desktop`:
+     ```bash
+     cd .\Quizzical-Desktop
+     ```
+   - Nainstalujte potřebné balíčky:
+     ```bash
+     npm install
+     ```
+   - Spusťte vývojový server:
+     ```bash
+     npm run dev
+     ```
+
+---

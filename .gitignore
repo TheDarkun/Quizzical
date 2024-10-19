@@ -4,6 +4,7 @@
 ./src/Quizzical-Desktop/.DS_Store
 ./src/Quizzical-Desktop/*.log*
 ./src/Quizzical-Desktop/.idea
+/src/Quizzical-Desktop/node_modules/
 
 ./src/Quizzical-Server/bin/
 ./src/Quizzical-Server/obj/
@@ -11,6 +12,8 @@
 ./src/Quizzical-Server/riderModule.iml
 ./src/Quizzical-Server/_ReSharper.Caches/
 /src/Quizzical-Server/.idea/
+/src/Quizzical-Server/bin/
+/src/Quizzical-Server/obj/
 
 ./src/Quizzical-Web/logs
 ./src/Quizzical-Web/*.log
@@ -21,6 +24,8 @@
 ./src/Quizzical-Web/lerna-debug.log*
 
 ./src/Quizzical-Web/node_modules
+/src/Quizzical-Web/node_modules/
+
 ./src/Quizzical-Web/dist
 ./src/Quizzical-Web/dist-ssr
 ./src/Quizzical-Web/*.local
@@ -34,3 +39,4 @@
 ./src/Quizzical-Web/*.njsproj
 ./src/Quizzical-Web/*.sln
 ./src/Quizzical-Web/*.sw?
+/src/Quizzical-Server/bin/

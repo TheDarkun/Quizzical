@@ -1,4 +1,6 @@
 using DotNetEnv.Extensions;
+using Microsoft.Data.Sqlite;
+using Quizzical_Server.Database;
 using Scalar.AspNetCore;
 
 
@@ -11,6 +13,8 @@ builder.WebHost.UseUrls(url);
 builder.Services.AddLogging();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddScoped(x => new SqliteConnection("Data Source=db.sqlite"));
+builder.Services.AddSingleton<DatabaseInitializer>();
 
 var app = builder.Build();
 
@@ -23,6 +27,7 @@ if (app.Environment.IsDevelopment())
         options.RouteTemplate = "openapi/{documentName}.json";
     });
     app.MapScalarApiReference();
+    logger.Log(LogLevel.Information ,$"You can access scalar at: {url}/scalar/v1");
 }
 
 app.UseHttpsRedirection();
@@ -47,8 +52,8 @@ app.MapGet("/weatherforecast", () =>
     .WithName("GetWeatherForecast")
     .WithOpenApi();
 
-// TODO: .env url
-logger.LogInformation($"You can access scalar at: {url}/scalar/v1");
+var databaseInitializer = app.Services.GetRequiredService<DatabaseInitializer>();
+await databaseInitializer.InitializeAsync();
 
 app.Run();
 

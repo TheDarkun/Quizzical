@@ -40,3 +40,7 @@
 ./src/Quizzical-Web/*.sln
 ./src/Quizzical-Web/*.sw?
 /src/Quizzical-Server/bin/
+/.idea/
+/src/Quizzical-Desktop/.idea/
+/src/Quizzical-Desktop/.vscode/
+/src/Quizzical-Desktop/out/

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/Quizzical-Desktop.iml" filepath="$PROJECT_DIR$/.idea/Quizzical-Desktop.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Quizzical-Web.iml" filepath="$PROJECT_DIR$/.idea/Quizzical-Web.iml" />
     </modules>
   </component>
 </project>

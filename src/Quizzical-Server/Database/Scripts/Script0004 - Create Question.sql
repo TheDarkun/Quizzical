@@ -1,0 +1,6 @@
+﻿CREATE TABLE question (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    quiz_id INTEGER NOT NULL,
+    title TEXT NOT NULL,
+    FOREIGN KEY(quiz_id) REFERENCES quiz(id)
+)

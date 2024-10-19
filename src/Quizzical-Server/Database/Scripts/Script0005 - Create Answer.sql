@@ -1,0 +1,7 @@
+﻿CREATE TABLE answer (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    question_id INTEGER NOT NULL,
+    text TEXT NOT NULL,
+    is_correct INTEGER NOT NULL DEFAULT 0,
+    FOREIGN KEY(question_id) REFERENCES question(id)
+)

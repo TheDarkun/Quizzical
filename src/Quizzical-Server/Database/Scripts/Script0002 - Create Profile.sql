@@ -1,0 +1,6 @@
+﻿CREATE TABLE profile (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    name TEXT UNIQUE NOT NULL,
+    FOREIGN KEY(user_id) REFERENCES user(id)
+)

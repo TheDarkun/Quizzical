@@ -1,6 +1,12 @@
+using DotNetEnv.Extensions;
 using Scalar.AspNetCore;
 
+
+var dict = DotNetEnv.Env.Load(@"C:\Users\vasek\Documents\Github\Quizzical\.env").ToDotEnvDictionary();
+var url = $"{dict["SERVER_PROTOCOL"]}://{dict["SERVER_HOST"]}:{dict["SERVER_PORT"]}";
 var builder = WebApplication.CreateBuilder(args);
+
+builder.WebHost.UseUrls(url);
 
 builder.Services.AddLogging();
 builder.Services.AddEndpointsApiExplorer();
@@ -42,7 +48,7 @@ app.MapGet("/weatherforecast", () =>
     .WithOpenApi();
 
 // TODO: .env url
-logger.LogInformation("You can access scalar at: http://localhost:5000/scalar/v1");
+logger.LogInformation($"You can access scalar at: {url}/scalar/v1");
 
 app.Run();
 

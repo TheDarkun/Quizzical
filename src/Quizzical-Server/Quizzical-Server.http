@@ -1,6 +1,0 @@
-@Quizzical_Server_HostAddress = http://localhost:5256
-
-GET {{Quizzical_Server_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

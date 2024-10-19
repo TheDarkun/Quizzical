@@ -1,21 +1,22 @@
 using DotNetEnv.Extensions;
+using FastEndpoints;
 using Microsoft.Data.Sqlite;
 using Quizzical_Server.Database;
 using Scalar.AspNetCore;
 
-
+// TODO: Use args instead of this
 var dict = DotNetEnv.Env.Load(@"C:\Users\vasek\Documents\Github\Quizzical\.env").ToDotEnvDictionary();
 var url = $"{dict["SERVER_PROTOCOL"]}://{dict["SERVER_HOST"]}:{dict["SERVER_PORT"]}";
 var builder = WebApplication.CreateBuilder(args);
 
 builder.WebHost.UseUrls(url);
-
+builder.Services.AddFastEndpoints();
 builder.Services.AddLogging();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped(x => new SqliteConnection("Data Source=db.sqlite"));
 builder.Services.AddSingleton<DatabaseInitializer>();
-
+builder.Services.AddScoped<DataAccess>();
 var app = builder.Build();
 
 var logger = app.Services.GetRequiredService<ILogger<Program>>();
@@ -31,6 +32,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseFastEndpoints();
+
 
 var summaries = new[]
 {
@@ -54,7 +57,7 @@ app.MapGet("/weatherforecast", () =>
 
 var databaseInitializer = app.Services.GetRequiredService<DatabaseInitializer>();
 await databaseInitializer.InitializeAsync();
-
+Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
 app.Run();
 
 record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)

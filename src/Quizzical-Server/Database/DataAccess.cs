@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using Microsoft.Data.Sqlite;
+using Quizzical_Server.Endpoints.Quiz;
 using Quizzical_Server.Models;
 
 namespace Quizzical_Server.Database;
@@ -88,5 +89,40 @@ public class DataAccess(SqliteConnection connection)
         await connection.OpenAsync();
         await connection.ExecuteAsync("UPDATE profile SET name = @name WHERE user_id = @id", new { name, id }); 
         await connection.CloseAsync();
+    }
+
+    public async Task CreateQuiz(CreateQuizRequest quiz)
+    {
+        await connection.OpenAsync();
+        await connection.ExecuteAsync("INSERT INTO quiz (author_id, title) VALUES (@authorId, @title)",
+            new { authorId = quiz.Id, title = quiz.Title });
+        var quizId = await connection.ExecuteScalarAsync<int>("SELECT last_insert_rowid()");
+        foreach (var question in quiz.Questions)
+        {
+            await connection.ExecuteAsync("INSERT INTO question (quiz_id, title) VALUES (@quizId, @title)", 
+                new { quizId, title = question.Title });
+            var questionId = await connection.ExecuteScalarAsync<int>("SELECT last_insert_rowid()");
+            foreach (var answer in question.Answers)
+            {
+                await connection.ExecuteAsync(
+                    "INSERT INTO answer (question_id, text, is_correct) VALUES (@questionId, @text, @isCorrect)",
+                    new { questionId, text = answer.Text, isCorrect = answer.IsCorrect });
+            }
+        }
+        await connection.CloseAsync();
+    }
+
+    public async Task<GetQuizResponse?> GetQuiz(int id)
+    {
+        await connection.OpenAsync();
+        var quiz = await connection.ExecuteScalarAsync<GetQuizResponse>
+        ("""
+         SELECT author_id, quiz.title AS title, question.title, answer.text FROM quiz
+            INNER JOIN question ON question.quiz_id = quiz.id
+            INNER JOIN answer ON answer.question_id = question.id
+            WHERE quiz.id = 1
+         """, new { id });
+        await connection.CloseAsync();
+        return quiz;
     }
 }

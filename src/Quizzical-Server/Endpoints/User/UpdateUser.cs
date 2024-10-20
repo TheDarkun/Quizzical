@@ -1,5 +1,4 @@
-﻿using FastEndpoints;
-using Quizzical_Server.Database;
+﻿using Quizzical_Server.Database;
 
 namespace Quizzical_Server.Endpoints.User;
 

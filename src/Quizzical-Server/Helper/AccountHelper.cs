@@ -38,15 +38,15 @@ public static class AccountHelper
         return enteredPasswordHash == storedHash;
     }
     
-    public static string GenerateJwtToken(string email, string secretKey)
+    public static string GenerateJwtToken(int id, bool isAdmin, string secretKey)
     {
         var jwtToken = JwtBearer.CreateToken(
             o =>
             {
                 o.SigningKey = secretKey;
                 o.ExpireAt = DateTime.UtcNow.AddDays(7);
-                // o.User.Roles.Add("Manager", "Auditor");
-                o.User.Claims.Add(("Email", email));
+                o.User.Roles.Add(isAdmin ? "Admin" : "User");
+                o.User.Claims.Add(("Id", id.ToString()));
             });
         return jwtToken;
     }

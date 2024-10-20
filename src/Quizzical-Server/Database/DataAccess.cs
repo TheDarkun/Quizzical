@@ -61,12 +61,32 @@ public class DataAccess(SqliteConnection connection)
         await connection.CloseAsync();
     }
 
-    public async Task<UserModel?> GetPasswordHashAndSaltFromEmail(string email)
+    public async Task<UserModel?> GetUserFromEmail(string email)
     {
         await connection.OpenAsync();
         var result = await connection.QuerySingleOrDefaultAsync<UserModel>(
-            "SELECT password_hash, password_salt FROM user WHERE email = @email", new { email });
+            "SELECT id, password_hash, password_salt, is_admin FROM user WHERE email = @email", new { email });
         await connection.CloseAsync();
         return result;
+    }
+
+    public async Task<UserModel> GetUserFromId(int id)
+    {
+        await connection.OpenAsync();
+        var user = await connection.QuerySingleOrDefaultAsync<UserModel>
+        ("""
+            SELECT user.id AS id, password_hash, password_salt, name FROM user 
+                JOIN profile ON profile.user_id = user.id 
+                WHERE user.id = @id
+         """, new { id });
+        await connection.CloseAsync();
+        return user!;
+    }
+
+    public async Task UpdateProfile(string name, int id)
+    {
+        await connection.OpenAsync();
+        await connection.ExecuteAsync("UPDATE profile SET name = @name WHERE user_id = @id", new { name, id }); 
+        await connection.CloseAsync();
     }
 }

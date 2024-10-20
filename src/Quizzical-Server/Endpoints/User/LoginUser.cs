@@ -32,7 +32,7 @@ public class LoginUser : Endpoint<LoginUserRequest>
             await SendAsync("password is required", 400, ct);
             return;
         }
-        var user = await DataAccess.GetPasswordHashAndSaltFromEmail(req.Email);
+        var user = await DataAccess.GetUserFromEmail(req.Email);
         if (user?.PasswordHash is null || user?.PasswordSalt is null)
         {
             await SendAsync("user does not exist", 400, ct);
@@ -43,9 +43,10 @@ public class LoginUser : Endpoint<LoginUserRequest>
             await SendAsync("invalid password", 401, ct);
             return;
         }
+
         // TODO: store path somewhere
         var secretKey = DotNetEnv.Env.Load(@"C:\Users\vasek\Documents\Github\Quizzical\.env").ToDotEnvDictionary()["JWT_SECRET_KEY"];
-        var jwtToken = AccountHelper.GenerateJwtToken(req.Email, secretKey);
+        var jwtToken = AccountHelper.GenerateJwtToken(user.Id, user.IsAdmin, secretKey);
         await SendAsync(new { token = jwtToken }, 200, ct);
     }
 }

@@ -12,6 +12,7 @@
         <PackageReference Include="dbup-sqlite" Version="5.0.40" />
         <PackageReference Include="DotNetEnv" Version="3.1.1" />
         <PackageReference Include="FastEndpoints" Version="5.30.0" />
+        <PackageReference Include="FastEndpoints.Security" Version="5.30.0" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.10"/>
         <PackageReference Include="Microsoft.Data.Sqlite" Version="8.0.10" />
         <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="8.1.2" />

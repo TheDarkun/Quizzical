@@ -1,9 +1,7 @@
 ﻿using System.Net.Mail;
 using System.Security.Cryptography;
 using System.Text;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using Microsoft.IdentityModel.Tokens;
+using FastEndpoints.Security;
 
 namespace Quizzical_Server.Helper;
 
@@ -42,21 +40,14 @@ public static class AccountHelper
     
     public static string GenerateJwtToken(string email, string secretKey)
     {
-        var tokenHandler = new JwtSecurityTokenHandler();
-        var key = Encoding.ASCII.GetBytes(secretKey);
-
-        var tokenDescriptor = new SecurityTokenDescriptor
-        {
-            Subject = new ClaimsIdentity(new[]
+        var jwtToken = JwtBearer.CreateToken(
+            o =>
             {
-                new Claim(ClaimTypes.Email, email),
-                // Add other claims as needed
-            }),
-            Expires = DateTime.UtcNow.AddHours(1),
-            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-        };
-
-        var token = tokenHandler.CreateToken(tokenDescriptor);
-        return tokenHandler.WriteToken(token);
+                o.SigningKey = secretKey;
+                o.ExpireAt = DateTime.UtcNow.AddDays(7);
+                // o.User.Roles.Add("Manager", "Auditor");
+                o.User.Claims.Add(("Email", email));
+            });
+        return jwtToken;
     }
 }

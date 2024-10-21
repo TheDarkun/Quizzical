@@ -86,6 +86,7 @@ header {
 }
 
 aside {
+  @apply sticky;
   grid-area: aside;
   margin: 2rem 0 2rem 2rem;
 }
@@ -98,7 +99,7 @@ main {
   margin: 2rem;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 960px) {
   #root {
     grid-template-columns: 1fr;
     grid-template-areas: 
@@ -110,6 +111,7 @@ main {
 
   aside {
     width: auto;
+    margin-right: 2rem;
   }
 }
 
@@ -119,4 +121,8 @@ h1 {
 
 h2 {
   @apply text-3xl font-medium
+}
+
+h3 {
+  @apply text-2xl font-medium;
 }

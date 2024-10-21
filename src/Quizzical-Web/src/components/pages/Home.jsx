@@ -20,9 +20,17 @@ import {
 export const Home = () => {
     return (
         <>
-            <aside>
-                <Card className="h-full">
-                    aside
+            <aside className="">
+                <Card className="h-full flex flex-col p-8 font-medium">
+                    <a href="#project">O projektu</a>
+                    <a href="#usecases">Ukázky použití</a>
+                    <a href="#login" className="ml-8">Přihlášení a účast kvízu</a>
+                    <a href="#table" className="ml-8">Veřejná tabulka</a>
+                    <a href="#desktop" className="ml-8">Desktopová aplikace</a>
+                    <a href="#install">Instalace a spuštění</a>
+                    <a href="#frontend-install" className="ml-8">Frontend (Webová aplikace)</a>
+                    <a href="#backend-install" className="ml-8">Backend (Server)</a>
+                    <a href="#desktop-install" className="ml-8">Desktopová aplikace</a>
                 </Card>
             </aside>
 
@@ -39,7 +47,7 @@ export const Home = () => {
                 </div>
                 <hr/>
                 <div className="flex flex-col gap-4">
-                    <h2>O projektu</h2>
+                    <h2 id="project">O projektu</h2>
                     <p><strong>Quizzical</strong> je interaktivní kvízová aplikace, která uživatelům umožňuje zodpovědět
                         otázky z
                         jednoho
@@ -68,7 +76,70 @@ export const Home = () => {
                     </ul>
                 </div>
                 <hr/>
-                
+                <div className="flex flex-col gap-4">
+                    <h2 id="usecases">Ukázky použití</h2>
+                    blablabla
+                    <h3 id="login">Přihlášení a účast kvízu</h3>
+                    Uživatelé mohou soutěžit v jednoduchém kvízu a za každou správnou odpověď získat bod.
+                    <h3 id="table">Veřejná tabulka</h3>
+                    Výsledky uživatelů se zobrazují ve veřejně dostupné tabulce, kde mohou sledovat své skóre.
+                    <h3 id="desktop">Desktopová aplikace</h3>
+                    Možnost vytvářet nové kvízové úkoly pomocí samostatné elektronové aplikace.
+                </div>
+                <hr/>
+                <div className="flex flex-col gap-4">
+                    <h1 id="install">Instalace a spuštění</h1>
+                    <h2 id="frontend-install">Frontend (Webová aplikace)</h2>
+                    <p>Přejděte do adresáře <strong>Quizzical-Web</strong></p>
+                    <span
+                        className="flex h-10 w-full rounded-md border border-input bg-muted px-3 py-2 text-sm ring-offset-background font-mono">
+                        cd .\Quizzical-Web
+                    </span>
+                    <p>Nainstalujte potřebné balíčky pomocí npm <strong>(verze 22.2.20)</strong></p>
+                    <span
+                        className="flex h-10 w-full rounded-md border border-input bg-muted px-3 py-2 text-sm ring-offset-background font-mono">
+                        npm install
+                    </span>
+                    <p>Spusťte vývojový server</p>
+                    <span
+                        className="flex h-10 w-full rounded-md border border-input bg-muted px-3 py-2 text-sm ring-offset-background font-mono">
+                        npm run dev
+                    </span>
+                    <h2 id="backend-install">Backend (Server)</h2>
+                    <ul>
+                        <li>
+                            Ujistěte se, že máte nainstalované <strong>.NET 8 SDK</strong>
+                        </li>
+                        <li>
+                            Přejděte do adresáře <strong>Quizzical-Server</strong>
+                        </li>
+                    </ul>
+                    <span
+                        className="flex h-10 w-full rounded-md border border-input bg-muted px-3 py-2 text-sm ring-offset-background font-mono">
+                        cd .\Quizzical-Server
+                    </span>
+                    <p>Spusťte server</p>
+                    <span
+                        className="flex h-10 w-full rounded-md border border-input bg-muted px-3 py-2 text-sm ring-offset-background font-mono">
+                        dotnet run
+                    </span>
+                    <h2 id="desktop-install">Desktopová aplikace</h2>
+                    <p>Přejděte do adresáře <strong>Quizzical-Desktop</strong></p>
+                    <span
+                        className="flex h-10 w-full rounded-md border border-input bg-muted px-3 py-2 text-sm ring-offset-background font-mono">
+                        cd .\Quizzical-Desktop
+                    </span>
+                    <p>Nainstalujte potřebné balíčky pomocí npm <strong>(verze 22.2.20)</strong></p>
+                    <span
+                        className="flex h-10 w-full rounded-md border border-input bg-muted px-3 py-2 text-sm ring-offset-background font-mono">
+                        npm install
+                    </span>
+                    <p>Spusťte vývojový server</p>
+                    <span
+                        className="flex h-10 w-full rounded-md border border-input bg-muted px-3 py-2 text-sm ring-offset-background font-mono">
+                        npm run dev
+                    </span>
+                </div>
             </main>
         </>
     )

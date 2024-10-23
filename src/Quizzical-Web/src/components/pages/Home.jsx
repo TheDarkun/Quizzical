@@ -17,20 +17,21 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 
+
 export const Home = () => {
     return (
         <>
             <aside className="">
-                <Card className="h-full flex flex-col p-8 font-medium">
-                    <a href="#project">O projektu</a>
-                    <a href="#usecases">Ukázky použití</a>
-                    <a href="#login" className="ml-8">Přihlášení a účast kvízu</a>
-                    <a href="#table" className="ml-8">Veřejná tabulka</a>
-                    <a href="#desktop" className="ml-8">Desktopová aplikace</a>
-                    <a href="#install">Instalace a spuštění</a>
-                    <a href="#frontend-install" className="ml-8">Frontend (Webová aplikace)</a>
-                    <a href="#backend-install" className="ml-8">Backend (Server)</a>
-                    <a href="#desktop-install" className="ml-8">Desktopová aplikace</a>
+                <Card className="h-full flex flex-col p-8 font-normal">
+                    <a className="hover:text-primary" href="#project">O projektu</a>
+                    <a className="hover:text-primary" href="#usecases">Ukázky použití</a>
+                    <a href="#login" className="ml-8 hover:text-primary">Přihlášení a účast kvízu</a>
+                    <a href="#table" className="ml-8 hover:text-primary">Veřejná tabulka</a>
+                    <a href="#desktop" className="ml-8 hover:text-primary">Desktopová aplikace</a>
+                    <a className="hover:text-primary" href="#install">Instalace a spuštění</a>
+                    <a href="#frontend-install" className="ml-8 hover:text-primary">Frontend (Webová aplikace)</a>
+                    <a href="#backend-install" className="ml-8 hover:text-primary">Backend (Server)</a>
+                    <a href="#desktop-install" className="ml-8 hover:text-primary">Desktopová aplikace</a>
                 </Card>
             </aside>
 

@@ -3,7 +3,7 @@ using Quizzical_Server.Database;
 
 namespace Quizzical_Server.Endpoints.Quiz;
 
-public class GetQuiz : Endpoint<GetQuizRequest, GetQuizResponse>
+public class GetQuiz : EndpointWithoutRequest
 {
     public DataAccess DataAccess { get; set; } = null!;
     
@@ -13,9 +13,16 @@ public class GetQuiz : Endpoint<GetQuizRequest, GetQuizResponse>
         AllowAnonymous();
     }
 
-    public override async Task HandleAsync(GetQuizRequest req, CancellationToken ct)
+    public override async Task HandleAsync(CancellationToken ct)
     {
-        var quiz = DataAccess.GetQuiz(req.Id);
+        int id = Query<int>("id");
+        Console.WriteLine("yo");
+        // if (req.Id is null)
+        // {
+        //     await SendAsync("no id", 400, ct);
+        //     return;
+        // }
+        var quiz = await DataAccess.GetQuiz(id);
         if (quiz is null)
         {
             await SendNotFoundAsync(ct);
@@ -23,17 +30,4 @@ public class GetQuiz : Endpoint<GetQuizRequest, GetQuizResponse>
         }
         await SendOkAsync(quiz, ct);
     }
-}
-
-public class GetQuizRequest
-{
-    [FromQueryParams]
-    public int Id { get; set; }
-}
-
-public class GetQuizResponse
-{
-    public int AuthorId { get; set; }
-    public required string Title { get; set; }
-    public required List<QuestionModel> Questions { get; set; }
 }

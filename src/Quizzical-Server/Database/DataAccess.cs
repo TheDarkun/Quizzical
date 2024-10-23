@@ -87,7 +87,7 @@ public class DataAccess(SqliteConnection connection)
     public async Task UpdateProfile(string name, int id)
     {
         await connection.OpenAsync();
-        await connection.ExecuteAsync("UPDATE profile SET name = @name WHERE user_id = @id", new { name, id }); 
+        await connection.ExecuteAsync("UPDATE profile SET name = @name WHERE user_id = @id", new { name, id });
         await connection.CloseAsync();
     }
 
@@ -99,7 +99,7 @@ public class DataAccess(SqliteConnection connection)
         var quizId = await connection.ExecuteScalarAsync<int>("SELECT last_insert_rowid()");
         foreach (var question in quiz.Questions)
         {
-            await connection.ExecuteAsync("INSERT INTO question (quiz_id, title) VALUES (@quizId, @title)", 
+            await connection.ExecuteAsync("INSERT INTO question (quiz_id, title) VALUES (@quizId, @title)",
                 new { quizId, title = question.Title });
             var questionId = await connection.ExecuteScalarAsync<int>("SELECT last_insert_rowid()");
             foreach (var answer in question.Answers)
@@ -109,19 +109,26 @@ public class DataAccess(SqliteConnection connection)
                     new { questionId, text = answer.Text, isCorrect = answer.IsCorrect });
             }
         }
+
         await connection.CloseAsync();
     }
 
-    public async Task<GetQuizResponse?> GetQuiz(int id)
+    public async Task<IEnumerable<QuestionModel>?> GetQuiz(int id)
     {
         await connection.OpenAsync();
-        var quiz = await connection.ExecuteScalarAsync<GetQuizResponse>
+        var quiz = await connection.QueryAsync<QuestionModel, AnswerModel, QuestionModel>
         ("""
-         SELECT author_id, quiz.title AS title, question.title, answer.text FROM quiz
+         SELECT question.title, answer.text AS text, question_id FROM quiz
             INNER JOIN question ON question.quiz_id = quiz.id
             INNER JOIN answer ON answer.question_id = question.id
             WHERE quiz.id = 1
-         """, new { id });
+         """, (question, answer) =>
+            {
+                question.Answers = new List<AnswerModel>();
+                question.Answers.Add(answer);
+                return question;
+            }, new { id },
+            splitOn: "question_id");
         await connection.CloseAsync();
         return quiz;
     }

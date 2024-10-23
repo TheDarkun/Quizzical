@@ -9,7 +9,7 @@ const Header = () => {
                 </Link>
             </div>
             <div className="w-full flex justify-center gap-2">
-                <Link to="/motivation">
+                <Link to="/motivation" className="text-red-500">
                     <Button variant="ghost">Motivace</Button>
                 </Link>
                 <Link to="/table">

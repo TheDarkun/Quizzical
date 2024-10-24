@@ -35,7 +35,7 @@ export const Home = () => {
                 </Card>
             </aside>
 
-            <main className="flex flex-col gap-8 leading-7">
+            <main className="flex flex-col gap-8 leading-7 overflow-y-auto">
                 <div className="flex flex-col gap-4">
                     <h1>Quizzical 🎓 - Jednoduchá kvízová platforma</h1>
                     <p>

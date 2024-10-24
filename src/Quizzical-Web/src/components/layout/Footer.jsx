@@ -8,7 +8,7 @@ export const Footer = () => {
             <div>
                 <a href="https://github.com/TheDarkun/Quizzical">
                     <Button variant="ghost" size="icon">
-                        <img className="h-8" src="/github-mark-white.svg" alt="github"/>
+                        <img className="h-8 invert" src="/github-mark-white.svg" alt="github"/>
                     </Button>
                 </a>
             </div>

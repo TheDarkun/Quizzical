@@ -26,5 +26,10 @@
         <EmbeddedResource Include="Database\Scripts\*.sql" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Endpoints\User\Data\" />
+      <Folder Include="Endpoints\User\Models\" />
+    </ItemGroup>
+
 
 </Project>

@@ -1,6 +1,6 @@
 ﻿using System.Security.Cryptography;
-using FastEndpoints;
 using Quizzical_Server.Database;
+using Quizzical_Server.Endpoints.User.Requests;
 using Quizzical_Server.Helper;
 namespace Quizzical_Server.Endpoints.User;
 
@@ -108,12 +108,4 @@ public class RegisterUser : Endpoint<RegisterUserRequest>
         rng.GetBytes(salt);
         return salt;
     }
-}
-
-public class RegisterUserRequest
-{
-    public required string Email { get; set; }
-    public required string Password { get; set; }
-    public required string RepeatedPassword { get; set; }
-    public required string Name { get; set; }
 }

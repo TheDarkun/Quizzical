@@ -1,11 +1,11 @@
-﻿using Quizzical_Server.Database;
-using Quizzical_Server.Models;
+﻿using Quizzical_Server.Endpoints.Quiz.Data;
+using Quizzical_Server.Endpoints.Quiz.Requests;
 
 namespace Quizzical_Server.Endpoints.Quiz;
 
 public class CreateQuiz : Endpoint<CreateQuizRequest>
 {
-    public DataAccess DataAccess { get; set; } = null!;
+    public QuizDatabaseAccess QuizDatabaseAccess { get; set; } = null!;
     
     public override void Configure()
     {
@@ -43,15 +43,8 @@ public class CreateQuiz : Endpoint<CreateQuizRequest>
                 return;
             }
         }
-        await DataAccess.CreateQuiz(req);
-        await SendOkAsync(req);
+        await QuizDatabaseAccess.CreateQuiz(req);
+        await SendOkAsync(req, ct);
     }
 }
 
-public class CreateQuizRequest
-{
-    [FromClaim]
-    public int Id { get; set; }
-    public required string Title { get; set; }
-    public required List<QuestionModel> Questions { get; set; }
-}

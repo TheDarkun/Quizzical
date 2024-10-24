@@ -91,45 +91,5 @@ public class DataAccess(SqliteConnection connection)
         await connection.CloseAsync();
     }
 
-    public async Task CreateQuiz(CreateQuizRequest quiz)
-    {
-        await connection.OpenAsync();
-        await connection.ExecuteAsync("INSERT INTO quiz (author_id, title) VALUES (@authorId, @title)",
-            new { authorId = quiz.Id, title = quiz.Title });
-        var quizId = await connection.ExecuteScalarAsync<int>("SELECT last_insert_rowid()");
-        foreach (var question in quiz.Questions)
-        {
-            await connection.ExecuteAsync("INSERT INTO question (quiz_id, title) VALUES (@quizId, @title)",
-                new { quizId, title = question.Title });
-            var questionId = await connection.ExecuteScalarAsync<int>("SELECT last_insert_rowid()");
-            foreach (var answer in question.Answers)
-            {
-                await connection.ExecuteAsync(
-                    "INSERT INTO answer (question_id, text, is_correct) VALUES (@questionId, @text, @isCorrect)",
-                    new { questionId, text = answer.Text, isCorrect = answer.IsCorrect });
-            }
-        }
-
-        await connection.CloseAsync();
-    }
-
-    public async Task<IEnumerable<QuestionModel>?> GetQuiz(int id)
-    {
-        await connection.OpenAsync();
-        var quiz = await connection.QueryAsync<QuestionModel, AnswerModel, QuestionModel>
-        ("""
-         SELECT question.title, answer.text AS text, question_id FROM quiz
-            INNER JOIN question ON question.quiz_id = quiz.id
-            INNER JOIN answer ON answer.question_id = question.id
-            WHERE quiz.id = 1
-         """, (question, answer) =>
-            {
-                question.Answers = new List<AnswerModel>();
-                question.Answers.Add(answer);
-                return question;
-            }, new { id },
-            splitOn: "question_id");
-        await connection.CloseAsync();
-        return quiz;
-    }
+    
 }

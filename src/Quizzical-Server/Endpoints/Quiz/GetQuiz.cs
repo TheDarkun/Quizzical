@@ -1,11 +1,13 @@
 ﻿
 using Quizzical_Server.Database;
+using Quizzical_Server.Endpoints.Quiz.Data;
+using Quizzical_Server.Endpoints.Quiz.Requests;
 
 namespace Quizzical_Server.Endpoints.Quiz;
 
-public class GetQuiz : EndpointWithoutRequest
+public class GetQuiz : Endpoint<GetQuizRequest>
 {
-    public DataAccess DataAccess { get; set; } = null!;
+    public QuizDatabaseAccess QuizDatabaseAccess { get; set; } = null!;
     
     public override void Configure()
     {
@@ -13,16 +15,9 @@ public class GetQuiz : EndpointWithoutRequest
         AllowAnonymous();
     }
 
-    public override async Task HandleAsync(CancellationToken ct)
+    public override async Task HandleAsync(GetQuizRequest req, CancellationToken ct)
     {
-        int id = Query<int>("id");
-        Console.WriteLine("yo");
-        // if (req.Id is null)
-        // {
-        //     await SendAsync("no id", 400, ct);
-        //     return;
-        // }
-        var quiz = await DataAccess.GetQuiz(id);
+        var quiz = await QuizDatabaseAccess.GetQuiz(req.Id);
         if (quiz is null)
         {
             await SendNotFoundAsync(ct);

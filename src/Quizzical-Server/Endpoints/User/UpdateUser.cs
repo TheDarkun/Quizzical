@@ -1,4 +1,5 @@
 ﻿using Quizzical_Server.Database;
+using Quizzical_Server.Endpoints.User.Requests;
 
 namespace Quizzical_Server.Endpoints.User;
 
@@ -30,9 +31,3 @@ public class UpdateUser : Endpoint<UpdateUserRequest>
     }
 }
 
-public class UpdateUserRequest
-{
-    [FromClaim]
-    public int Id { get; set; }
-    public required string Name { get; set; }
-}

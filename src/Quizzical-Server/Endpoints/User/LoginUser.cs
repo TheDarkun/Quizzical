@@ -1,6 +1,7 @@
 ﻿using DotNetEnv.Extensions;
-using FastEndpoints;
 using Quizzical_Server.Database;
+using Quizzical_Server.Endpoints.User.Requests;
+using Quizzical_Server.Endpoints.User.Responses;
 using Quizzical_Server.Helper;
 
 namespace Quizzical_Server.Endpoints.User;
@@ -47,12 +48,6 @@ public class LoginUser : Endpoint<LoginUserRequest>
         // TODO: store path somewhere
         var secretKey = DotNetEnv.Env.Load(@"C:\Users\vasek\Documents\Github\Quizzical\.env").ToDotEnvDictionary()["JWT_SECRET_KEY"];
         var jwtToken = AccountHelper.GenerateJwtToken(user.Id, user.IsAdmin, secretKey);
-        await SendAsync(new { token = jwtToken }, 200, ct);
+        await SendAsync(new LoginUserResponse{ jwtToken = jwtToken }, 200, ct);
     }
-}
-
-public class LoginUserRequest
-{
-    public required string Email { get; set; }
-    public required string Password { get; set; }
 }

@@ -27,7 +27,7 @@ public class CreateQuiz : Endpoint<CreateQuizRequest>
         }
         foreach (var question in req.Questions)
         {
-            if (string.IsNullOrEmpty(question.Title))
+            if (string.IsNullOrEmpty(question.Prompt))
             {
                 await SendAsync("question titles are required", 400, ct);
                 return;
@@ -44,7 +44,7 @@ public class CreateQuiz : Endpoint<CreateQuizRequest>
             }
         }
         await QuizDatabaseAccess.CreateQuiz(req);
-        await SendOkAsync(req, ct);
+        await SendOkAsync(null, ct);
     }
 }
 

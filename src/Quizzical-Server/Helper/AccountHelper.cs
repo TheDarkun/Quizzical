@@ -44,7 +44,7 @@ public static class AccountHelper
             o =>
             {
                 o.SigningKey = secretKey;
-                o.ExpireAt = DateTime.UtcNow.AddDays(7);
+                o.ExpireAt = DateTime.UtcNow.AddHours(1);
                 o.User.Roles.Add(isAdmin ? "Admin" : "User");
                 o.User.Claims.Add(("Id", id.ToString()));
             });

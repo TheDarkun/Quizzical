@@ -13,8 +13,8 @@ public class QuizDatabaseAccess(SqliteConnection connection)
         var quizId = await connection.ExecuteScalarAsync<int>("SELECT last_insert_rowid()");
         foreach (var question in quiz.Questions)
         {
-            await connection.ExecuteAsync("INSERT INTO question (quiz_id, title) VALUES (@quizId, @title)",
-                new { quizId, title = question.Title });
+            await connection.ExecuteAsync("INSERT INTO question (quiz_id, prompt) VALUES (@quizId, @prompt)",
+                new { quizId, prompt = question.Prompt });
             var questionId = await connection.ExecuteScalarAsync<int>("SELECT last_insert_rowid()");
             foreach (var answer in question.Answers)
             {

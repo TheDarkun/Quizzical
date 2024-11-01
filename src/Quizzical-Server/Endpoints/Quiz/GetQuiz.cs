@@ -17,8 +17,13 @@ public class GetQuiz : Endpoint<GetQuizRequest>
 
     public override async Task HandleAsync(GetQuizRequest req, CancellationToken ct)
     {
+        if (req.Id == 0)
+        {
+            await SendAsync(null, 400, ct);
+            return;
+        }
         var quiz = await QuizDatabaseAccess.GetQuiz(req.Id);
-        if (quiz is null)
+        if (string.IsNullOrEmpty(quiz.Title))
         {
             await SendNotFoundAsync(ct);
             return;

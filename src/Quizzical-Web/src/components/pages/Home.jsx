@@ -34,7 +34,7 @@ export const Home = () => {
                     <a href="#desktop-install" className="ml-8 hover:text-primary">Desktopová aplikace</a>
                 </Card>
             </aside>
-
+            <h1>yo</h1>
             <main className="flex flex-col gap-8 leading-7 overflow-y-auto">
                 <div className="flex flex-col gap-4">
                     <h1>Quizzical 🎓 - Jednoduchá kvízová platforma</h1>

@@ -9,6 +9,7 @@ import {Dashboard} from "@/components/pages/Dashboard.jsx";
 import {DashboardInfoPage} from "@/components/pages/dashboard/DashboardInfoPage.jsx";
 import {DashboardAdmin} from "@/components/pages/dashboard/DashboardAdmin.jsx";
 import {CreateQuiz} from "@/components/pages/quiz/CreateQuiz.jsx";
+import {QuizPage} from "@/components/pages/quiz/QuizPage.jsx";
 
 function App() {
   return (
@@ -20,10 +21,7 @@ function App() {
                 <Route path="login" element={<Login />} />
                 <Route path="register" element={<Register />} />
                 <Route path="create" element={<CreateQuiz />} />
-                <Route path="dashboard" element={<Dashboard />} >
-                    <Route index element={<DashboardInfoPage />} />
-                    <Route path="admin" element={<DashboardAdmin/>} />
-                </Route>
+                <Route path="quiz" element={<QuizPage />} />
             </Routes>
             <Footer/>
         </BrowserRouter>

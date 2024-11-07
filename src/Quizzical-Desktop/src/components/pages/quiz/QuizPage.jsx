@@ -12,8 +12,26 @@ export const QuizPage = () => {
                     <CardTitle>[NÁZEV KVÍZU]</CardTitle>
                     <CardDescription>[JMÉNO AUTORA]</CardDescription>
                 </CardHeader>
+            </Card>
+            <Card className="w-[600px]">
+                <CardHeader>
+                    <CardTitle>Hodnocení</CardTitle>
+                </CardHeader>
                 <CardContent>
-
+                    <ul>
+                        <li>
+                            <span className="font-semibold">Počet chyb: </span>
+                            <span className="font-medium text-primary">[ČÍSLO]</span>
+                        </li>
+                        <li>
+                            <span className="font-semibold">Správné odpovědi: </span>
+                            <span className="font-medium text-primary">[ČÍSLO]</span>
+                        </li>
+                        <li>
+                            <span className="font-semibold">Úspěšnost: </span>
+                            <span className="font-medium text-primary">[ČÍSLO] %</span>
+                        </li>
+                    </ul>
                 </CardContent>
             </Card>
             {Array.from({length: 4}).map((_, index) => (

@@ -3,6 +3,7 @@ import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button";
+import {Link} from "react-router-dom";
 
 const Pagination = ({
   className,
@@ -30,12 +31,14 @@ const PaginationItem = React.forwardRef(({ className, ...props }, ref) => (
 PaginationItem.displayName = "PaginationItem"
 
 const PaginationLink = ({
+  to,
   className,
   isActive,
   size = "icon",
   ...props
 }) => (
-  <a
+  <Link
+    to={to}
     aria-current={isActive ? "page" : undefined}
     className={cn(buttonVariants({
       variant: isActive ? "outline" : "ghost",
@@ -45,17 +48,19 @@ const PaginationLink = ({
 )
 PaginationLink.displayName = "PaginationLink"
 
+
 const PaginationPrevious = ({
   className,
   ...props
 }) => (
   <PaginationLink
+      To={props.To}
     aria-label="Go to previous page"
     size="default"
     className={cn("gap-1 pl-2.5", className)}
     {...props}>
     <ChevronLeft className="h-4 w-4" />
-    <span>Previous</span>
+    <span>Předchozí</span>
   </PaginationLink>
 )
 PaginationPrevious.displayName = "PaginationPrevious"

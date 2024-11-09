@@ -2,7 +2,7 @@
 import {Link} from "react-router-dom";
 import {Button} from "@/components/ui/button.jsx";
 
-export const QuizCard = ({title, author}) => {
+export const QuizCard = ({title, author, link}) => {
     return (
         <Card className="">
             <CardHeader>
@@ -10,7 +10,7 @@ export const QuizCard = ({title, author}) => {
                 <CardDescription>{author}</CardDescription>
             </CardHeader>
             <CardFooter>
-                <Link to="quiz">
+                <Link to={`quiz?id=${link}`}>
                     <Button>Zkusit Kvíz</Button>
                 </Link>
             </CardFooter>

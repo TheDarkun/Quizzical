@@ -1,5 +1,5 @@
 ﻿import {Button} from "@/components/ui/button.jsx";
-import {Link} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 
 import {
     DropdownMenu,
@@ -9,8 +9,27 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import {useLocalStorage} from "@/hooks/useLocalStorage.js";
+import {useEffect} from "react";
 
 const Header = () => {
+    
+    const [refreshToken, setRefreshToken, removeRefreshToken] = useLocalStorage("refreshToken");
+    const [jwtToken, setJwtToken, removeJwtToken] = useLocalStorage("refreshToken");
+    
+    const location = useLocation();
+    
+    useEffect(() => {
+
+    }, [location.pathname])
+    const navigate = useNavigate();
+    
+    const handleLogout = () => {
+        removeRefreshToken();
+        removeJwtToken();
+        navigate("/");
+    }
+    
     return (
         <header className="border bg-card text-card-foreground shadow-sm flex justify-between p-2 border-l-0 border-r-0 border-t-0">
             <div className="w-full">
@@ -21,31 +40,25 @@ const Header = () => {
 
             <div>
                 <Link to="/create">
-                    <Button variant="ghost">Vytvořit</Button>
+                    <Button className="text-foreground" variant="ghost">Vytvořit</Button>
                 </Link>
             </div>
             
             <div className=" w-full flex justify-end gap-2">
-                <Link to="/login">
-                    <Button variant="ghost">Přihlášení</Button>
-                </Link>
-                <Link to="/register">
-                    <Button variant="ghost">Registrace</Button>
-                </Link>
+                
 
-                {/*<DropdownMenu>*/}
-                {/*    <DropdownMenuTrigger>*/}
-                {/*        <Button variant="ghost" className="text-primary">(JMÉNO UŽIVATELE)</Button>*/}
-                {/*    </DropdownMenuTrigger>*/}
-                {/*    <DropdownMenuContent>*/}
-                {/*        <DropdownMenuItem>*/}
-                {/*            <Link to="dashboard">Profil</Link>*/}
-                {/*        </DropdownMenuItem>*/}
-                {/*        <DropdownMenuSeparator />*/}
-                {/*        <DropdownMenuItem>Odhlásit se</DropdownMenuItem>*/}
-                {/*    </DropdownMenuContent>*/}
-                {/*</DropdownMenu>*/}
-
+                {!refreshToken() ? (
+                    <>
+                        <Link to="/login">
+                            <Button className="text-foreground" variant="ghost">Přihlášení</Button>
+                        </Link>
+                        <Link to="/register">
+                            <Button className="text-foreground" variant="ghost">Registrace</Button>
+                        </Link>
+                    </>
+                ) : (
+                    <Button onClick={handleLogout} variant="ghost">Odhlásit</Button>
+                )}
             </div>
         </header>
     )

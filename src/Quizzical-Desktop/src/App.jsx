@@ -13,19 +13,17 @@ import {QuizPage} from "@/components/pages/quiz/QuizPage.jsx";
 
 function App() {
   return (
-    <>
-        <BrowserRouter>
-            <Header/>
-            <Routes>
-                <Route index element={<Home />} />
-                <Route path="login" element={<Login />} />
-                <Route path="register" element={<Register />} />
-                <Route path="create" element={<CreateQuiz />} />
-                <Route path="quiz" element={<QuizPage />} />
-            </Routes>
-            <Footer/>
-        </BrowserRouter>
-    </>
+      <BrowserRouter>
+          <Header/>
+          <Routes>
+              <Route index element={<Home />} />
+              <Route path="login" element={<Login />} />
+              <Route path="register" element={<Register />} />
+              <Route path="create" element={<CreateQuiz />} />
+              <Route path="quiz" element={<QuizPage />} />
+          </Routes>
+          <Footer/>
+      </BrowserRouter>
   )
 }
 

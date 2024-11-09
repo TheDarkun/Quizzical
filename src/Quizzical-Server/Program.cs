@@ -44,6 +44,7 @@ if (app.Environment.IsDevelopment())
     logger.Log(LogLevel.Information ,$"You can access scalar at: {url}/scalar/v1");
 }
 
+app.UseCors();
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();

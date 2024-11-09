@@ -27,7 +27,7 @@ const Header = () => {
     const handleLogout = () => {
         removeRefreshToken();
         removeJwtToken();
-        navigate("/");
+        navigate("/login");
     }
     
     return (

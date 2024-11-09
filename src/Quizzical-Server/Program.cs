@@ -1,10 +1,9 @@
 using DotNetEnv.Extensions;
-using FastEndpoints;
 using FastEndpoints.Security;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Data.Sqlite;
 using Quizzical_Server.Database;
 using Quizzical_Server.Endpoints.Quiz.Data;
+using Quizzical_Server.Endpoints.User.Data;
 using Scalar.AspNetCore;
 
 // TODO: Use args instead of this
@@ -29,8 +28,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped(x => new SqliteConnection("Data Source=db.sqlite"));
 builder.Services.AddSingleton<DatabaseInitializer>();
-builder.Services.AddScoped<DataAccess>();
 builder.Services.AddScoped<QuizDatabaseAccess>();
+builder.Services.AddScoped<UserDatabaseAccess>();
 var app = builder.Build();
 
 var logger = app.Services.GetRequiredService<ILogger<Program>>();

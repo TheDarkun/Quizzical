@@ -50,4 +50,13 @@ public static class AccountHelper
             });
         return jwtToken;
     }
+
+    public static string  GenerateRefreshToken(int id)
+    {
+        var randomNumber = new byte[32];
+        using var rng = RandomNumberGenerator.Create();
+        rng.GetBytes(randomNumber);
+        var uniqueId = Convert.ToBase64String(randomNumber);
+        return $"{id}-{uniqueId}";
+    }
 }

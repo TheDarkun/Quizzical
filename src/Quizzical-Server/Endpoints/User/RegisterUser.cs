@@ -1,12 +1,12 @@
 ﻿using System.Security.Cryptography;
-using Quizzical_Server.Database;
+using Quizzical_Server.Endpoints.User.Data;
 using Quizzical_Server.Endpoints.User.Requests;
 using Quizzical_Server.Helper;
 namespace Quizzical_Server.Endpoints.User;
 
 public class RegisterUser : Endpoint<RegisterUserRequest>
 {
-    public DataAccess DataAccess { get; set; } = null!;
+    public UserDatabaseAccess UserDatabaseAccess { get; set; } = null!;
     
     public override void Configure()
     {
@@ -46,12 +46,12 @@ public class RegisterUser : Endpoint<RegisterUserRequest>
             await SendAsync("passwords do not match", 400, ct);
             return;
         }
-        if (await DataAccess.IsNameTakenAsync(req.Name))
+        if (await UserDatabaseAccess.IsNameTakenAsync(req.Name))
         {
             await SendAsync("name is taken", 400, ct);
             return;
         }
-        if (await DataAccess.IsEmailTakenAsync(req.Email))
+        if (await UserDatabaseAccess.IsEmailTakenAsync(req.Email))
         {
             await SendAsync("email is taken", 400, ct);
             return;
@@ -59,7 +59,7 @@ public class RegisterUser : Endpoint<RegisterUserRequest>
         var salt = GenerateSalt();
         var hashedPassword = AccountHelper.HashPassword(req.Password, salt);
         var saltBase64 = Convert.ToBase64String(salt);
-        await DataAccess.CreateUserAsync(req.Name, req.Email, hashedPassword, saltBase64);
+        await UserDatabaseAccess.CreateUserAsync(req.Name, req.Email, hashedPassword, saltBase64);
         await SendOkAsync(ct);
     }
 

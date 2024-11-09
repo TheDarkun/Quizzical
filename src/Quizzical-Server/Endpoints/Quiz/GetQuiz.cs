@@ -11,7 +11,7 @@ public class GetQuiz : Endpoint<GetQuizRequest>
     
     public override void Configure()
     {
-        Get("/quiz");
+        Get("/quiz/{id}");
         AllowAnonymous();
     }
 
@@ -27,6 +27,15 @@ public class GetQuiz : Endpoint<GetQuizRequest>
         {
             await SendNotFoundAsync(ct);
             return;
+        }
+
+        foreach (var question in quiz.Questions)
+        {
+            var correctCount = question.Answers.Count(x => x.IsCorrect);
+            if (correctCount > 1)
+            {
+                question.MultipleChoices = true;
+            }
         }
         await SendOkAsync(quiz, ct);
     }

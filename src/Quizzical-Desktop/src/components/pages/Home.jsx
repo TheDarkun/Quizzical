@@ -59,7 +59,6 @@ export const Home = () => {
     }, [])
 
     useEffect(() => {
-        console.log("yo")
         const queryParams = new URLSearchParams(location.search);
         const id = queryParams.get("id") || "1";
         if (id <= 0) {

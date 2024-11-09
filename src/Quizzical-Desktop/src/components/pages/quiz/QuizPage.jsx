@@ -1,101 +1,77 @@
 ﻿import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card.jsx";
-import {RadioGroup, RadioGroupItem} from "@/components/ui/radio-group.jsx";
-import {Label} from "@/components/ui/label.jsx";
-import {Checkbox} from "@/components/ui/checkbox.jsx";
 import {Button} from "@/components/ui/button.jsx";
+import {useLocation, useNavigate} from "react-router-dom";
+import {useEffect, useState} from "react";
+import axios from "axios";
+import {QuizQuestionCheckbox} from "@/components/QuizQuestion/QuizQuestionCheckbox.jsx";
+import {QuizQuestionRadio} from "@/components/QuizQuestion/QuizQuestionRadio.jsx";
 
 export const QuizPage = () => {
-    return (
+    
+    const location = useLocation();
+    const navigate = useNavigate();
+    const [quiz, setQuiz] = useState(null);
+    const [result, setResult] = useState(null);
+    
+    useEffect(() => {
+        const queryParams = new URLSearchParams(location.search);
+        const id = queryParams.get("id");
+        
+        if (isNaN(id) || id < 1) {
+            navigate("/");
+        }
+        
+        async function fetchQuiz() {
+            try {
+                const response = await axios.get(`http://localhost:5006/quiz/${id}`);
+                if (response.status === 200) {
+                    setQuiz(response.data);
+                    console.log(response.data);
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        }
+        fetchQuiz();
+    }, [location])
+    
+    return quiz && (
         <div className="flex flex-col items-center gap-8 p-8" style={{width: "calc(100vw - 2rem)"}}>
             <Card className="w-[600px]">
                 <CardHeader>
-                    <CardTitle>[NÁZEV KVÍZU]</CardTitle>
-                    <CardDescription>[JMÉNO AUTORA]</CardDescription>
+                    <CardTitle>{quiz.title}</CardTitle>
+                    <CardDescription>{quiz.author}</CardDescription>
                 </CardHeader>
             </Card>
-            <Card className="w-[600px]">
-                <CardHeader>
-                    <CardTitle>Hodnocení</CardTitle>
-                </CardHeader>
-                <CardContent>
-                    <ul>
-                        <li>
-                            <span className="font-semibold">Počet chyb: </span>
-                            <span className="font-medium text-primary">[ČÍSLO]</span>
-                        </li>
-                        <li>
-                            <span className="font-semibold">Správné odpovědi: </span>
-                            <span className="font-medium text-primary">[ČÍSLO]</span>
-                        </li>
-                        <li>
-                            <span className="font-semibold">Úspěšnost: </span>
-                            <span className="font-medium text-primary">[ČÍSLO] %</span>
-                        </li>
-                    </ul>
-                </CardContent>
-            </Card>
-            {Array.from({length: 4}).map((_, index) => (
+            {result && (
                 <Card className="w-[600px]">
                     <CardHeader>
-                        <CardTitle>[ČÍSLO OTÁZKY]. [OTÁZKA]</CardTitle>
+                        <CardTitle>Hodnocení</CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <RadioGroup defaultValue="option-one">
-                            <div className="flex items-center space-x-2">
-                                <Label htmlFor="option-one" className="min-w-[20px]">1. </Label>
-                                <RadioGroupItem value="option-one" id="option-one"/>
-                                <Label htmlFor="option-one">Option One</Label>
-                            </div>
-                            <div className="flex items-center space-x-2">
-                                <Label htmlFor="option-two" className="min-w-[20px]">2. </Label>
-                                <RadioGroupItem value="option-two" id="option-two"/>
-                                <Label htmlFor="option-two">Option One</Label>
-                            </div>
-                            <div className="flex items-center space-x-2">
-                                <Label htmlFor="option-two" className="min-w-[20px]">3. </Label>
-                                <RadioGroupItem value="option-two" id="option-two"/>
-                                <Label htmlFor="option-two">Option One</Label>
-                            </div>
-                            <div className="flex items-center space-x-2">
-                                <Label htmlFor="option-two" className="min-w-[20px]">4. </Label>
-                                <RadioGroupItem value="option-two" id="option-two"/>
-                                <Label htmlFor="option-two">Option One</Label>
-                            </div>
-                        </RadioGroup>
+                        <ul>
+                            <li>
+                                <span className="font-semibold">Počet chyb: </span>
+                                <span className="font-medium text-primary">[ČÍSLO]</span>
+                            </li>
+                            <li>
+                                <span className="font-semibold">Správné odpovědi: </span>
+                                <span className="font-medium text-primary">[ČÍSLO]</span>
+                            </li>
+                            <li>
+                                <span className="font-semibold">Úspěšnost: </span>
+                                <span className="font-medium text-primary">[ČÍSLO] %</span>
+                            </li>
+                        </ul>
                     </CardContent>
                 </Card>
-            ))}
-            {Array.from({length: 3}).map((_, index) => (
-                <Card className="w-[600px]">
-                    <CardHeader>
-                        <CardTitle>[ČÍSLO OTÁZKY]. [OTÁZKA]</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-
-                        <RadioGroup defaultValue="option-one">
-                            <div className="flex items-center space-x-2">
-                                <Label htmlFor="option-one" className="min-w-[20px]">1. </Label>
-                                <Checkbox/>
-                                <Label htmlFor="option-one">Option One</Label>
-                            </div>
-                            <div className="flex items-center space-x-2">
-                                <Label htmlFor="option-two" className="min-w-[20px]">2. </Label>
-                                <Checkbox/>
-                                <Label htmlFor="option-two">Option One</Label>
-                            </div>
-                            <div className="flex items-center space-x-2">
-                                <Label htmlFor="option-two" className="min-w-[20px]">3. </Label>
-                                <Checkbox/>
-                                <Label htmlFor="option-two">Option One</Label>
-                            </div>
-                            <div className="flex items-center space-x-2">
-                                <Label htmlFor="option-two" className="min-w-[20px]">4. </Label>
-                                <Checkbox/>
-                                <Label htmlFor="option-two">Option One</Label>
-                            </div>
-                        </RadioGroup>
-                    </CardContent>
-                </Card>
+            )}
+            {quiz.questions.map((question, index) => (
+                <>{question.multipleChoices ? (
+                    <QuizQuestionCheckbox question={question} position={index + 1}/>
+                ) : (
+                    <QuizQuestionRadio question={question} position={index + 1}/>
+                )}</>
             ))}
             <Button className="w-[300px]">Vyhodnotit</Button>
         </div>

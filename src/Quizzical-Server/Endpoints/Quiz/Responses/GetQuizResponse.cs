@@ -1,4 +1,6 @@
-﻿namespace Quizzical_Server.Endpoints.Quiz.Responses;
+﻿using System.Text.Json.Serialization;
+
+namespace Quizzical_Server.Endpoints.Quiz.Responses;
 
 public class GetQuizResponse
 {
@@ -10,6 +12,7 @@ public class GetQuizResponse
 
 public class GetQuizResponseQuestions
 {
+    public bool MultipleChoices { get; set; }
     public int QuestionId { get; set; }
     public string Prompt { get; set; }
     public List<GetQuizResponseAnswers> Answers { get; set; }
@@ -17,6 +20,8 @@ public class GetQuizResponseQuestions
 
 public class GetQuizResponseAnswers
 {
+    [JsonIgnore]
+    public bool IsCorrect { get; set; }
     public int AnswerId { get; set; }
     public string Text { get; set; }
 }

@@ -35,7 +35,7 @@ public class QuizDatabaseAccess(SqliteConnection connection)
         await connection.QueryAsync<GetQuizResponse, GetQuizResponseQuestions, GetQuizResponseAnswers, GetQuizResponse>
         (
             """
-            SELECT quiz.id AS quiz_id, profile.name AS author, quiz.title, question.id AS question_id, question.prompt, answer.id AS answer_id, answer.text AS text FROM quiz
+            SELECT quiz.id AS quiz_id, profile.name AS author, quiz.title, question.id AS question_id, question.prompt, answer.id AS answer_id, answer.text AS text, answer.is_correct AS is_correct FROM quiz
                 INNER JOIN user ON user.id = quiz.author_id
                 INNER JOIN profile ON profile.user_id = user.id
                 INNER JOIN question ON question.quiz_id = quiz.id
@@ -76,7 +76,7 @@ public class QuizDatabaseAccess(SqliteConnection connection)
     public async Task<IEnumerable<GetQuizPageResponse>> GetQuizPage(int page)
     {
         await connection.OpenAsync();
-        var quizzes = await connection.QueryAsync<GetQuizPageResponse>("SELECT quiz.id, quiz.title, profile.name FROM quiz JOIN profile ON quiz.author_id = profile.user_id LIMIT 12 OFFSET @page", new { page = (page - 1) * 12 });
+        var quizzes = await connection.QueryAsync<GetQuizPageResponse>("SELECT quiz.id, quiz.title, profile.name AS author FROM quiz JOIN profile ON quiz.author_id = profile.user_id LIMIT 12 OFFSET @page", new { page = (page - 1) * 12 });
         await connection.CloseAsync();
         return quizzes;
     }

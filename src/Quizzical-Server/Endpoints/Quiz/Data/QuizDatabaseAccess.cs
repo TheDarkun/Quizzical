@@ -72,4 +72,20 @@ public class QuizDatabaseAccess(SqliteConnection connection)
 
         return response;
     }
+
+    public async Task<IEnumerable<GetQuizPageResponse>> GetQuizPage(int page)
+    {
+        await connection.OpenAsync();
+        var quizzes = await connection.QueryAsync<GetQuizPageResponse>("SELECT quiz.id, quiz.title, profile.name FROM quiz JOIN profile ON quiz.author_id = profile.user_id LIMIT 12 OFFSET @page", new { page = (page - 1) * 12 });
+        await connection.CloseAsync();
+        return quizzes;
+    }
+
+    public async Task<int> GetQuizPageCount()
+    {
+        await connection.OpenAsync();
+        var count = await connection.ExecuteScalarAsync<int>("SELECT COUNT(*) / 12 + 1 FROM quiz;");
+        await connection.CloseAsync();
+        return count;
+    }
 }

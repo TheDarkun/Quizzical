@@ -20,7 +20,12 @@ const Header = () => {
     const location = useLocation();
     
     useEffect(() => {
-
+        console.error(location.pathname)
+        if (location.pathname !== "/login" && location.pathname !== "/register") {
+            if (jwtToken() === undefined) {
+                navigate("/login");
+            }
+        }
     }, [location.pathname])
     const navigate = useNavigate();
     
@@ -39,15 +44,17 @@ const Header = () => {
             </div>
 
             <div>
-                <Link to="/create">
-                    <Button className="text-foreground" variant="ghost">Vytvořit</Button>
-                </Link>
+                {jwtToken() && (
+                    <Link to="/create">
+                        <Button className="text-foreground" variant="ghost">Vytvořit</Button>
+                    </Link>
+                )}
             </div>
             
             <div className=" w-full flex justify-end gap-2">
                 
 
-                {!refreshToken() ? (
+                {!jwtToken() ? (
                     <>
                         <Link to="/login">
                             <Button className="text-foreground" variant="ghost">Přihlášení</Button>

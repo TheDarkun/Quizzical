@@ -84,7 +84,7 @@ public class QuizDatabaseAccess(SqliteConnection connection)
     public async Task<int> GetQuizPageCount()
     {
         await connection.OpenAsync();
-        var count = await connection.ExecuteScalarAsync<int>("SELECT COUNT(*) / 12 + 1 FROM quiz;");
+        var count = await connection.ExecuteScalarAsync<int>("SELECT (COUNT(*) + 11) / 12 FROM quiz;");
         await connection.CloseAsync();
         return count;
     }

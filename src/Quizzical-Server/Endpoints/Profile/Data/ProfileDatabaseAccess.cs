@@ -10,6 +10,9 @@ public class ProfileDatabaseAccess(SqliteConnection connection)
         var profile = await connection.QueryFirstAsync<GetProfileResponse>
         ("""
          SELECT
+          (SELECT name
+          FROM profile
+          WHERE user_id = @id) AS name,
          (SELECT COUNT(*)
           FROM completed_quizzes
           WHERE user_id = @id) AS completed_quizzes,

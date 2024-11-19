@@ -27,6 +27,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Endpoints\Profile\Models\" />
       <Folder Include="Endpoints\User\Models\" />
     </ItemGroup>
 

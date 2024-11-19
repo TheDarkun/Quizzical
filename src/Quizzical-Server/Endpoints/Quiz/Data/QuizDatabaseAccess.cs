@@ -23,7 +23,7 @@ public class QuizDatabaseAccess(SqliteConnection connection)
                     new { questionId, text = answer.Text, isCorrect = answer.IsCorrect });
             }
         }
-
+        
         await connection.CloseAsync();
     }
     

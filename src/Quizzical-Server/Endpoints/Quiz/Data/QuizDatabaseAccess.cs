@@ -88,4 +88,11 @@ public class QuizDatabaseAccess(SqliteConnection connection)
         await connection.CloseAsync();
         return count;
     }
+
+    public async Task DeleteQuiz(int id)
+    {
+        await connection.OpenAsync();
+        await connection.ExecuteAsync("PRAGMA foreign_keys = ON; DELETE FROM quiz WHERE id = @id;", new { id });
+        await connection.CloseAsync();
+    }
 }

@@ -3,5 +3,5 @@
     user_id INTEGER NOT NULL,
     quiz_id INTEGER NOT NULL,
     FOREIGN KEY(user_id) REFERENCES user(id),
-    FOREIGN KEY(quiz_id) REFERENCES quiz(id)
+    FOREIGN KEY(quiz_id) REFERENCES quiz(id) ON DELETE CASCADE
 )

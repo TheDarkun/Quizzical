@@ -42,10 +42,10 @@ const Header = () => {
             </div>
             <div className="w-full flex justify-center gap-2">
                 <Link to="/motivation" className="text-red-500">
-                    <Button variant="ghost">Motivace</Button>
+                    <Button variant="ghost" className="text-foreground">Motivace</Button>
                 </Link>
                 <Link to="/table">
-                    <Button variant="ghost">Tabulka</Button>
+                    <Button variant="ghost" className="text-foreground">Tabulka</Button>
                 </Link>
             </div>
 
@@ -64,7 +64,7 @@ const Header = () => {
                     (
                         <DropdownMenu>
                             <DropdownMenuTrigger>
-                                <Button variant="ghost" className="text-primary">(JMÉNO UŽIVATELE)</Button>
+                                <Button variant="ghost" className="text-foreground">(JMÉNO UŽIVATELE)</Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent>
                                 <DropdownMenuItem>

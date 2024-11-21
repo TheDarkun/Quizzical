@@ -35,7 +35,7 @@ public class RefreshUser : Endpoint<RefreshUserRequest>
             return;
         }
         
-        var secretKey = DotNetEnv.Env.Load(@"C:\Users\vasek\Documents\Github\Quizzical\.env").ToDotEnvDictionary()["JWT_SECRET_KEY"];
+        var secretKey = DotNetEnv.Env.Load(@"C:\Users\darkun\Documents\Github\Quizzical\.env").ToDotEnvDictionary()["JWT_SECRET_KEY"];
         var user = await UserDatabaseAccess.GetUserFromId(id);
         if (user is null)
         {

@@ -2,13 +2,14 @@ using DotNetEnv.Extensions;
 using FastEndpoints.Security;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Quizzical_Server.Database;
+using Quizzical_Server.Endpoints.Leaderboard.Data;
 using Quizzical_Server.Endpoints.Profile.Data;
 using Quizzical_Server.Endpoints.Quiz.Data;
 using Quizzical_Server.Endpoints.User.Data;
 using Scalar.AspNetCore;
 
 // TODO: Use args instead of this
-var dict = DotNetEnv.Env.Load(@"C:\Users\vasek\Documents\Github\Quizzical\.env").ToDotEnvDictionary();
+var dict = DotNetEnv.Env.Load(@"C:\Users\darkun\Documents\Github\Quizzical\.env").ToDotEnvDictionary();
 var url = $"{dict["SERVER_PROTOCOL"]}://{dict["SERVER_HOST"]}:{dict["SERVER_PORT"]}";
 var builder = WebApplication.CreateBuilder(args);
 builder.WebHost.UseUrls(url);
@@ -32,6 +33,7 @@ builder.Services.AddSingleton<DatabaseInitializer>();
 builder.Services.AddScoped<QuizDatabaseAccess>();
 builder.Services.AddScoped<UserDatabaseAccess>();
 builder.Services.AddScoped<ProfileDatabaseAccess>();
+builder.Services.AddScoped<LeaderboardDataAccess>();
 var app = builder.Build();
 
 var logger = app.Services.GetRequiredService<ILogger<Program>>();

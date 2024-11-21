@@ -72,10 +72,10 @@ export const QuizPage = () => {
 
     const submitQuizRequest = async () => {
         const queryParams = new URLSearchParams(location.search);
-        const id = queryParams.get("id");
+        const quizId = queryParams.get("id");
 
         const e = await axios.post(`http://localhost:5006/quiz/results`, {
-            id,
+            quizId,
             response
         }, { headers: { Authorization: `Bearer ${jwtToken()}` } });
         setResult(e.data.results);

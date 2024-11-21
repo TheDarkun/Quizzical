@@ -104,7 +104,7 @@ export const Home = () => {
                 <h1 className="text-center" style={{width:"inherit"}}>Vyberte si kvíz</h1>
             <div className="grid grid-cols-4 gap-8" style={{width:"inherit"}}>
                 {quizzes && quizzes.map((item) => (
-                    <QuizCard key={item.id} title={item.title} author={`${item.author} ${item.id}`} link={item.id} />
+                    <QuizCard key={item.id} title={item.title} author={item.author} link={item.id} />
                 ))}
             </div>
             <Pagination>

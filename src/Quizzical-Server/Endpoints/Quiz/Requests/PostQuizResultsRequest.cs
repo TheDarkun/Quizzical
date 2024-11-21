@@ -2,6 +2,8 @@
 
 public class PostQuizResultsRequest
 {
-    public required int Id { get; set; }
+    [FromClaim]
+    public int Id { get; set; }
+    public required int QuizId { get; set; }
     public required string[][] Response { get; set; }
 }

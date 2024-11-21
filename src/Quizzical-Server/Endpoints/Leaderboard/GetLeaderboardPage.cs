@@ -1,20 +1,20 @@
 ﻿using Quizzical_Server.Endpoints.Leaderboard.Data;
-using Quizzical_Server.Endpoints.Leaderboard.Requests;
 
 namespace Quizzical_Server.Endpoints.Leaderboard;
 
-public class GetLeaderboardPage : Endpoint<GetLeaderboardPageRequest>
+public class GetLeaderboardPage : EndpointWithoutRequest
 {
     public LeaderboardDataAccess LeaderboardDataAccess { get; set; } = null!;
     
     public override void Configure()
     {
-        Get("/leaderboard/{page}");
+        Get("/leaderboard");
         AllowAnonymous();
     }
 
-    public override async Task HandleAsync(GetLeaderboardPageRequest req, CancellationToken ct)
+    public override async Task HandleAsync(CancellationToken ct)
     {
-        var leaderboardPage = await LeaderboardDataAccess.GetLeaderboardPage(req.Page);
+        var leaderboardPage = await LeaderboardDataAccess.GetLeaderboardPage();
+        await SendAsync(leaderboardPage, 200, ct);
     }
 }

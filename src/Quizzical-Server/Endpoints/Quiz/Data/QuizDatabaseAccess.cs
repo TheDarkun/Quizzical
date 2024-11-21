@@ -23,10 +23,10 @@ public class QuizDatabaseAccess(SqliteConnection connection)
                     new { questionId, text = answer.Text, isCorrect = answer.IsCorrect });
             }
         }
-        
+
         await connection.CloseAsync();
     }
-    
+
     public async Task<GetQuizResponse> GetQuiz(int id)
     {
         await connection.OpenAsync();
@@ -50,7 +50,7 @@ public class QuizDatabaseAccess(SqliteConnection connection)
                     response.QuizId = quiz.QuizId;
                     response.Questions = new();
                 }
-                
+
                 if (!response.Questions.Any(x => x.QuestionId == question.QuestionId))
                 {
                     response.Questions.Add(
@@ -61,7 +61,7 @@ public class QuizDatabaseAccess(SqliteConnection connection)
                             Answers = new()
                         });
                 }
-                    
+
                 response.Questions.Find(x => x.QuestionId == question.QuestionId)?.Answers.Add(answer);
                 return quiz;
             }, new { id },
@@ -76,7 +76,9 @@ public class QuizDatabaseAccess(SqliteConnection connection)
     public async Task<IEnumerable<GetQuizPageResponse>> GetQuizPage(int page)
     {
         await connection.OpenAsync();
-        var quizzes = await connection.QueryAsync<GetQuizPageResponse>("SELECT quiz.id, quiz.title, profile.name AS author FROM quiz JOIN profile ON quiz.author_id = profile.user_id LIMIT 8 OFFSET @page", new { page = (page - 1) * 8 });
+        var quizzes = await connection.QueryAsync<GetQuizPageResponse>(
+            "SELECT quiz.id, quiz.title, profile.name AS author FROM quiz JOIN profile ON quiz.author_id = profile.user_id LIMIT 8 OFFSET @page",
+            new { page = (page - 1) * 8 });
         await connection.CloseAsync();
         return quizzes;
     }
@@ -93,6 +95,21 @@ public class QuizDatabaseAccess(SqliteConnection connection)
     {
         await connection.OpenAsync();
         await connection.ExecuteAsync("PRAGMA foreign_keys = ON; DELETE FROM quiz WHERE id = @id;", new { id });
+        await connection.CloseAsync();
+    }
+
+    public async Task AddCompletedQuiz(int id, int quizId)
+    {
+        await connection.OpenAsync();
+        await connection.ExecuteAsync("""
+                                      INSERT INTO completed_quizzes (user_id, quiz_id)
+                                      SELECT @id, @quizId
+                                      WHERE NOT EXISTS (
+                                          SELECT 1
+                                          FROM completed_quizzes
+                                          WHERE user_id = @id AND quiz_id = @quizId
+                                      );
+                                      """, new { id, quizId });
         await connection.CloseAsync();
     }
 }

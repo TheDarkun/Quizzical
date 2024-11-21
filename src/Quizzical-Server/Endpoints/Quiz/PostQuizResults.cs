@@ -15,7 +15,7 @@ public class PostQuizResults : Endpoint<PostQuizResultsRequest>
 
     public override async Task HandleAsync(PostQuizResultsRequest req, CancellationToken ct)
     {
-        var quiz = await QuizDatabaseAccess.GetQuiz(req.Id);
+        var quiz = await QuizDatabaseAccess.GetQuiz(req.QuizId);
         if (string.IsNullOrEmpty(quiz.Title))
         {
             await SendAsync(null, 400, ct);
@@ -50,6 +50,8 @@ public class PostQuizResults : Endpoint<PostQuizResultsRequest>
             }
         }
 
+        await QuizDatabaseAccess.AddCompletedQuiz(req.Id, req.QuizId);
+        
         var response = new PostQuizResultsResponse
         {
             Results = result

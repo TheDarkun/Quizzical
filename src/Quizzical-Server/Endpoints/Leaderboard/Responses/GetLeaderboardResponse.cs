@@ -1,9 +1,5 @@
 ﻿namespace Quizzical_Server.Endpoints.Leaderboard.Responses;
 
-public class GetLeaderboardResponse
-{
-    public List<GetLeaderboardResponseRow> Rows { get; set; } = [];
-}
 
 public class GetLeaderboardResponseRow
 {

@@ -45,7 +45,7 @@ public class LoginUser : Endpoint<LoginUserRequest>
         }
 
         // TODO: store path somewhere
-        var secretKey = DotNetEnv.Env.Load(@"C:\Users\darkun\Documents\Github\Quizzical\.env").ToDotEnvDictionary()["JWT_SECRET_KEY"];
+        var secretKey = DotNetEnv.Env.Load(@"C:\Users\vasek\Documents\Github\Quizzical\.env").ToDotEnvDictionary()["JWT_SECRET_KEY"];
         var jwtToken = AccountHelper.GenerateJwtToken(user.Id, user.IsAdmin, secretKey);
 
         var refreshToken = AccountHelper.GenerateRefreshToken(user.Id);

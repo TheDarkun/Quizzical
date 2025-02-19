@@ -1,4 +1,3 @@
-using DotNetEnv.Extensions;
 using FastEndpoints.Security;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Quizzical_Server.Database;
@@ -8,16 +7,14 @@ using Quizzical_Server.Endpoints.Quiz.Data;
 using Quizzical_Server.Endpoints.User.Data;
 using Scalar.AspNetCore;
 
-// TODO: Use args instead of this
-var dict = DotNetEnv.Env.Load(@"C:\Users\vasek\Documents\Github\Quizzical\.env").ToDotEnvDictionary();
-var url = $"{dict["SERVER_PROTOCOL"]}://{dict["SERVER_HOST"]}:{dict["SERVER_PORT"]}";
 var builder = WebApplication.CreateBuilder(args);
+var url = $"{builder.Configuration["SERVER_PROTOCOL"]}://{builder.Configuration["SERVER_HOST"]}:{builder.Configuration["SERVER_PORT"]}";
 builder.WebHost.UseUrls(url);
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy => { policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader(); });
 });
-builder.Services.AddAuthenticationJwtBearer(s => s.SigningKey = dict["JWT_SECRET_KEY"]);
+builder.Services.AddAuthenticationJwtBearer(s => s.SigningKey = builder.Configuration["JWT_SECRET_KEY"]);
 builder.Services.AddAuthentication(o =>
 {
     o.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;

@@ -64,7 +64,7 @@ const Header = () => {
                     (
                         <DropdownMenu>
                             <DropdownMenuTrigger>
-                                <Button variant="ghost" className="text-foreground">(JMÉNO UŽIVATELE)</Button>
+                                <Button variant="ghost" className="text-foreground">Profil</Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent>
                                 <DropdownMenuItem>

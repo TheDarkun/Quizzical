@@ -1,5 +1,4 @@
-﻿using DotNetEnv.Extensions;
-using Quizzical_Server.Endpoints.User.Data;
+﻿using Quizzical_Server.Endpoints.User.Data;
 using Quizzical_Server.Endpoints.User.Requests;
 using Quizzical_Server.Endpoints.User.Responses;
 using Quizzical_Server.Helper;
@@ -9,6 +8,8 @@ namespace Quizzical_Server.Endpoints.User;
 public class LoginUser : Endpoint<LoginUserRequest>
 {
     public UserDatabaseAccess UserDatabaseAccess { get; set; } = null!;
+    public IConfiguration Configuration { get; set; } = null!;
+    
     public override void Configure()
     {
         Post("user/login");
@@ -45,7 +46,7 @@ public class LoginUser : Endpoint<LoginUserRequest>
         }
 
         // TODO: store path somewhere
-        var secretKey = DotNetEnv.Env.Load(@"C:\Users\vasek\Documents\Github\Quizzical\.env").ToDotEnvDictionary()["JWT_SECRET_KEY"];
+        var secretKey = Configuration["JWT_SECRET_KEY"];
         var jwtToken = AccountHelper.GenerateJwtToken(user.Id, user.IsAdmin, secretKey);
 
         var refreshToken = AccountHelper.GenerateRefreshToken(user.Id);

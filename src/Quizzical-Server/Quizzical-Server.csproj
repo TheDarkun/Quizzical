@@ -5,12 +5,12 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <RootNamespace>Quizzical_Server</RootNamespace>
+        <UserSecretsId>5055c12f-6412-44c3-b66b-8a7ca8386276</UserSecretsId>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="Dapper" Version="2.1.35" />
         <PackageReference Include="dbup-sqlite" Version="5.0.40" />
-        <PackageReference Include="DotNetEnv" Version="3.1.1" />
         <PackageReference Include="FastEndpoints" Version="5.30.0" />
         <PackageReference Include="FastEndpoints.Security" Version="5.30.0" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.10"/>

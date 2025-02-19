@@ -1,5 +1,4 @@
-﻿using DotNetEnv.Extensions;
-using Quizzical_Server.Endpoints.User.Data;
+﻿using Quizzical_Server.Endpoints.User.Data;
 using Quizzical_Server.Endpoints.User.Requests;
 using Quizzical_Server.Endpoints.User.Responses;
 using Quizzical_Server.Helper;
@@ -9,7 +8,7 @@ namespace Quizzical_Server.Endpoints.User;
 public class RefreshUser : Endpoint<RefreshUserRequest>
 {
     public UserDatabaseAccess UserDatabaseAccess { get; set; } = null!;
-
+    public IConfiguration Configuration { get; set; } = null!;
     public override void Configure()
     {
         Post("user/refresh");
@@ -34,8 +33,8 @@ public class RefreshUser : Endpoint<RefreshUserRequest>
             await UserDatabaseAccess.DeleteRefreshToken(req.RefreshToken);
             return;
         }
-        
-        var secretKey = DotNetEnv.Env.Load(@"C:\Users\vasek\Documents\Github\Quizzical\.env").ToDotEnvDictionary()["JWT_SECRET_KEY"];
+
+        var secretKey = Configuration["JWT_SECRET_KEY"];
         var user = await UserDatabaseAccess.GetUserFromId(id);
         if (user is null)
         {

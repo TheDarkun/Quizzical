@@ -30,20 +30,24 @@ Aplikace se skládá z:
 ### Veřejná tabulka
 
 Každý uživatel, který se přihlásí a zodpoví otázku kvízu, získá bod. Tyto body jsou následně viditelné ve veřejné tabulce.
-
-TODO: OBRÁZEK TABULKY
+<p align="center">
+   <img src="https://github.com/user-attachments/assets/6639df77-e49b-4e63-80f8-467365c0cb46" alt="Alt Text" style="width:500px; height:auto;">
+</p>
 
 ### Kvíz
 
 Jednoduchý kvíz pro rychlé testování znalostí uživatelů.
-
-TODO: OBRÁZEK KVÍZU
+<p align="center">
+   <img src="https://github.com/user-attachments/assets/30455ed7-f14e-4fc7-9293-24904acae2d6" alt="Alt Text" style="width:500px; height:auto;">
+</p>
 
 ### Desktopová aplikace
 
 Pomocí Electronové aplikace můžete vytvářet nové kvízové otázky.
 
-TODO: OBRÁZEK VYTVÁŘENÍ KVÍZU
+<p align="center">
+   <img src="https://github.com/user-attachments/assets/402cceed-4dce-4ec7-b0db-667b14618e1e" alt="Alt Text" style="width:500px; height:auto;">
+</p>
 
 ## Instalace a spuštění
 
@@ -66,6 +70,15 @@ TODO: OBRÁZEK VYTVÁŘENÍ KVÍZU
    - Přejděte do adresáře `Quizzical-Server`:
      ```bash
      cd .\Quizzical-Server
+     ```
+   - Nastavte si secrets.json
+     ```json
+      {
+        "SERVER_PROTOCOL": "http",
+        "SERVER_HOST": "localhost",
+        "SERVER_PORT": 5006,
+        "JWT_SECRET_KEY": "=h91<[mDHWwUf.zmk%?([P.G<*x=Xgju"
+      }
      ```
    - Spusťte server:
      ```bash

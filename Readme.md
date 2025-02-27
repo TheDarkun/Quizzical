@@ -50,7 +50,42 @@ Pomocí Electronové aplikace můžete vytvářet nové kvízové otázky.
 </p>
 
 ## Instalace a spuštění
+### Pomocí binaries a bez admin práv
+#### Node
+- U Node je potřeba nainstalovat standalone binary https://nodejs.org/en/download
+- Dále je potřeba daný zip extrahovat a v extrahovaném adresáři spustit cmd
+- V cmd dočasně nastavit node.js přes `set PATH=C:\Users\User\Downloads\node-v22.14.0-win-x64\node-v22.14.0-win-x64;%PATH%`
 
+#### Git
+- git disponuje portable verzi https://git-scm.com/downloads/win
+- poté v adresáři bin se nachází **git.exe**, které lze nastavit ve vs code v nastavení **git: path** `"git.path": "C:/Users/User/Downloads/PortableGit/bin/git.exe"`
+- Dále můžeme naklovat projekt za pomocí `git clone `https://github.com/TheDarkun/Quizzical`
+
+#### Web
+- v Quzzical-Web stačí poté napsat `npm i` a pro spuštění `npm run dev`
+- pro stylování je potřeba nainstalovat **Tailwind CSS IntelliSense** extension
+
+#### Desktop
+- Quizzical-Desktop funguje stejně, kde je potřeba prvně napsat `npm i` a poté `npm run dev`, bude také ale potřeba spustit electron v druhém cmd za pomocí `npm run electron` (je potřeba znovu dočasně nastavit node.js)
+
+#### Server
+- Dotnet funguje na podobném principu, kde je potřbea stáhnout binary https://dotnet.microsoft.com/en-us/download/dotnet/9.0
+- a poté v extrahovaném adresáři znova v cmd napsat
+   1. `set DOTNET_ROOT=C:\Users\User\Downloads\dotnet-sdk-9.0.200-win-x64\sdk\9.0.200`
+   2. `set PATH=C:\Users\User\Downloads\dotnet-sdk-9.0.200-win-x64\sdk\9.0.200;%PATH%`
+   3. `set DOTNET_MULTILEVEL_LOOKUP=0`
+- před spuštěním projektu je ale nejdříve potřeba upravit soubor appsettings.json, kde je potřeba přidat
+```
+"SERVER_PROTOCOL": "http",
+"SERVER_HOST": "localhost",
+"SERVER_PORT": 5006,
+"JWT_SECRET_KEY": "=h91<[mDHWwUf.zmk%?([P.G<*x=Xgju"
+```
+- Dále stačí jen v Quizzical-Server spustit `dotnet watch run`
+- Pro snadnější práci lze stáhnout extensions: **C#**, **C# Dev Kit**, **IntelliCode for C# Dev Kit**, **.NET Install Tool** a **SQLite**
+  - Po spuštění solution se v Exploreru na spodu zobrazí nová karta **Solution Explorer**
+  - Pro propojení SQLite databáze je potřeba v Command Palette (Ctrl+Shift+P) potřeba spustit **SQLite: Open Database** a poté se v exploreru zobrazí nová SQLITE EXPLORER
+### Normálně
 1. **Frontend (Webová aplikace)**:
    - Přejděte do adresáře `Quizzical-Web`:
      ```bash

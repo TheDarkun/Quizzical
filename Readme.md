@@ -51,15 +51,18 @@ Pomocí Electronové aplikace můžete vytvářet nové kvízové otázky.
 
 ## Instalace a spuštění
 ### Pomocí binaries a bez admin práv
+#### IDE
+- Pokud čirou náhodou má vaše instituce VS Code z roku 2022, tak lze nainstalovat nové VS Code bez potřeby práv, protože se defaultně instaluje pro jednoho uživatele (doporučuji zaškrtnout přidání zástupce na plochu) https://code.visualstudio.com/
 #### Node
 - U Node je potřeba nainstalovat standalone binary https://nodejs.org/en/download
 - Dále je potřeba daný zip extrahovat a v extrahovaném adresáři spustit cmd
 - V cmd dočasně nastavit node.js přes `set PATH=C:\Users\User\Downloads\node-v22.14.0-win-x64\node-v22.14.0-win-x64;%PATH%`
-
+> [!WARNING]
+> Nezapomeňte změnit cestu u každého příkazu, například **User** nahraďte stancikv. Dále zkontrolujte verzi dané binary, může se mírně lišit podle toho, kdy tuto dokumentaci čtete
 #### Git
 - git disponuje portable verzi https://git-scm.com/downloads/win
 - poté v adresáři bin se nachází **git.exe**, které lze nastavit ve vs code v nastavení **git: path** `"git.path": "C:/Users/User/Downloads/PortableGit/bin/git.exe"`
-- Dále můžeme naklovat projekt za pomocí `git clone `https://github.com/TheDarkun/Quizzical`
+- Dále můžeme naklovat projekt za pomocí `git clone https://github.com/TheDarkun/Quizzical`
 
 #### Web
 - v Quzzical-Web stačí poté napsat `npm i` a pro spuštění `npm run dev`
@@ -69,12 +72,13 @@ Pomocí Electronové aplikace můžete vytvářet nové kvízové otázky.
 - Quizzical-Desktop funguje stejně, kde je potřeba prvně napsat `npm i` a poté `npm run dev`, bude také ale potřeba spustit electron v druhém cmd za pomocí `npm run electron` (je potřeba znovu dočasně nastavit node.js)
 
 #### Server
-- Dotnet funguje na podobném principu, kde je potřbea stáhnout binary https://dotnet.microsoft.com/en-us/download/dotnet/9.0
+- Dotnet funguje na podobném principu, kde je potřeba stáhnout binary https://dotnet.microsoft.com/en-us/download/dotnet/9.0
 - a poté v extrahovaném adresáři znova v cmd napsat
-   1. `set DOTNET_ROOT=C:\Users\User\Downloads\dotnet-sdk-9.0.200-win-x64\sdk\9.0.200`
-   2. `set PATH=C:\Users\User\Downloads\dotnet-sdk-9.0.200-win-x64\sdk\9.0.200;%PATH%`
+   1. `set DOTNET_ROOT=C:\Users\User\Downloads\Quizzical\src\Quizzical-Server\sdk\9.0.201`
+   2. `set PATH=C:\Users\User\Downloads\Quizzical\src\Quizzical-Server\sdk\9.0.201;%PATH%`
    3. `set DOTNET_MULTILEVEL_LOOKUP=0`
-- před spuštěním projektu je ale nejdříve potřeba upravit soubor appsettings.json, kde je potřeba přidat
+> [!WARNING]
+> před spuštěním projektu je ale nejdříve potřeba upravit soubor appsettings.json, kde stačí zkopírovat:
 ```
 "SERVER_PROTOCOL": "http",
 "SERVER_HOST": "localhost",
@@ -82,9 +86,13 @@ Pomocí Electronové aplikace můžete vytvářet nové kvízové otázky.
 "JWT_SECRET_KEY": "=h91<[mDHWwUf.zmk%?([P.G<*x=Xgju"
 ```
 - Dále stačí jen v Quizzical-Server spustit `dotnet watch run`
+> [!TIP]
+> Je možné, že po použití `cd` přestane dotnet fungovat. Je poté tedy potřeba přesunou celou binary do adresáře **Quizzical-Server**, kde se poté ve stejném adresáří dá použít dotnet.
 - Pro snadnější práci lze stáhnout extensions: **C#**, **C# Dev Kit**, **IntelliCode for C# Dev Kit**, **.NET Install Tool** a **SQLite**
   - Po spuštění solution se v Exploreru na spodu zobrazí nová karta **Solution Explorer**
   - Pro propojení SQLite databáze je potřeba v Command Palette (Ctrl+Shift+P) potřeba spustit **SQLite: Open Database** a poté se v exploreru zobrazí nová SQLITE EXPLORER
+#### Databáze
+- V neposlední řadě, pokud chcete nahlížet do databáze, tak je potřeba si stáhnout https://sqlitebrowser.org/dl/ a to konkrétně **Windows PortableApp**
 ### Normálně
 1. **Frontend (Webová aplikace)**:
    - Přejděte do adresáře `Quizzical-Web`:

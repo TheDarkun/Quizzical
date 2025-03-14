@@ -12,7 +12,10 @@ export const QuizQuestionCheckbox = ({question, position, response, result}) => 
         prompt,
     } = question;
     
+    const [shuffledAnswers, setShuffledAnswers] = useState([]);
+    
     useEffect(() => {
+        setShuffledAnswers(answers.sort(() => Math.random() - 0.5))
     }, [question])
     
     const handleCheckChange = (e, i) => {
@@ -70,7 +73,7 @@ export const QuizQuestionCheckbox = ({question, position, response, result}) => 
             </CardHeader>
             <CardContent>
                 <RadioGroup  defaultValue="option-one">
-                    {answers.map((answer, index) => (
+                    {shuffledAnswers.map((answer, index) => (
                         <div key={index} className={`flex items-center space-x-2 p-[1px] rounded ${getStyle(answer.text)}`}>
                             <Label htmlFor={`${questionId}${answer.answerId}`} className="min-w-[20px]">{index + 1}. </Label>
                             <Checkbox disabled={result} onCheckedChange={(e) => handleCheckChange(e, index)} id={`${questionId}${answer.answerId}`}/>

@@ -11,6 +11,8 @@ export const QuizQuestionRadio = ({question, position, response, result}) => {
         prompt,
     } = question;
 
+    const [shuffledAnswers, setShuffledAnswers] = useState([]);
+    
     const handleCheckChange = (e) => {
         // response.fill(false)
         // response[e] = true;
@@ -18,6 +20,10 @@ export const QuizQuestionRadio = ({question, position, response, result}) => {
         response[0] = answers[e].text;
         console.log(answers[e].text);
     }
+
+    useEffect(() => {
+        setShuffledAnswers(answers.sort(() => Math.random() - 0.5))
+    }, [question])
     
     const [resultStyle, setResultStyle] = useState(null);
     
@@ -60,7 +66,7 @@ export const QuizQuestionRadio = ({question, position, response, result}) => {
             </CardHeader>
             <CardContent>
                 <RadioGroup disabled={result} onValueChange={handleCheckChange}>
-                    {answers.map((answer, index) => (
+                    {shuffledAnswers.map((answer, index) => (
                         <div key={index} className={`flex items-center space-x-2 p-[1px] rounded ${getStyle(answer.text)}`}>
                             <Label htmlFor={`${questionId}${answer.answerId}`} className="min-w-[20px]">{index + 1}. </Label>
                             <RadioGroupItem id={`${questionId}${answer.answerId}`} value={index} />

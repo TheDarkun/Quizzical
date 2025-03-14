@@ -12,19 +12,73 @@
 
 **Quizzical** je interaktivní kvízová aplikace, která uživatelům umožňuje zodpovědět otázky z jednoho jednoduchého kvízu a získat za to body. Výsledky se následně zobrazují v přehledné veřejné tabulce. Aplikace využívá moderní webové technologie, díky čemuž nabízí rychlé a intuitivní prostředí pro uživatele.
 
-Aplikace se skládá z:
+### Složení aplikace
 
 - **Frontend**: React + ShadCN - Kombinace Reactu a knihovny ShadCN pro rychlé a elegantní uživatelské rozhraní.
 - **Backend**: ASP.NET FastEndpoints - Lehký a rychlý framework pro tvorbu API. FastEndpoints umožňuje rychlé nasazení RESTových služeb s minimálním overheadem a skvělou výkonností.
 - **Databáze**: SQLite - Jednoduchá, lehká databáze ideální pro malé projekty, kde není potřeba komplexní správa dat.
 - **Desktop aplikace**: Electron + React + ShadCN - Pro zajištění přehledné a uživatelsky přívětivé správy úkolů je použita Electronová aplikace, která běží na Reactu.
 
-## Hlavní funkce
+![image](https://github.com/user-attachments/assets/c833b606-ee2a-4e54-b3ef-ec11379e053b)
+
+### Hlavní funkce
 
 - **Přihlášení a účast v kvízu**: Uživatelé mohou soutěžit v jednoduchém kvízu a za každou správnou odpověď získat bod.
 - **Veřejná tabulka**: Výsledky uživatelů se zobrazují ve veřejně dostupné tabulce, kde mohou sledovat své skóre.
 - **Desktopová aplikace**: Možnost vytvářet nové kvízové úkoly pomocí samostatné elektronové aplikace.
 
+### Diagram databáze (nachází se zde 1:1, 1:M i M:N)
+![image](https://github.com/user-attachments/assets/d585edf1-8915-4005-a7a2-4d92e6af3a22)
+> [!NOTE]
+> V adresáři documents se nachází **.drawio** verze tohoto diagramu
+
+### Jak funguje vytváření kvízů
+1. Uživatel zadá název kvízu
+2. Uživatel vytvoří otázku
+    - Uživatel přidá název otázky
+    - Uživatel přidá odpovědi
+    - Uživatel zaškrtne, které odpovědi jsou správné
+3. Uživatel vytvoří novou otázku, do té doby, dokud nebude mít alespoň 3 vytvořené otázky
+4. Uživatel pošle požadavek vytvoření kvízů za pomocí tlačítka
+5. Server získá požadek
+6. Server projde jednotlivé části kvízu
+    - Server zjistí, zda nadpis existuje
+    - Server zjistí, zda má kvíz alespoň 3 otázky
+    - Server projde jednotlivé otázky
+      - Server zjistí, zda má otázka název
+      - Server zjistí, zda má každá odpoveď text
+      - Server zjistí, zda má otázka alespoň jednu správnou odpověď
+7. Server vytvoří nový kvíz a zapíše jej do tabulky
+8. Server pošle 200, protože se správně vytvořil kvíz bez problémů
+9. Uživatel dostane tuto zprávu
+10. Uživatel je přesměrován na Home page
+
+## Specifikace Samostatného projektu
+- Vše potřebné prerekvizity z: https://xeon.spskladno.cz/~holecek/Predmet_Programovani/
+1. Projekt je (nejpozději od druhého ročníku) uložen na Gitu. - **https://github.com/TheDarkun/Quizzical**
+2. Webová prezentace projektu
+   1. Stručný popis programu, jeho funkce, ukázky použití - **Home page a toto README**
+   2. Seznam použitých algoritmů (včetně pseudokódu/vývojového diagramu/ER diagramu) a knihoven - **Sekce "O projektu"**
+   3. Seznam autorů - **Footer**
+   4. Odkaz na Git pro stažení. - **Footer**
+   5. Možnost přihlášení uživatele + různý obsah pro přihlášeného/nepřihlášeného uživatele. - **Header**
+   6. Zobrazení databázových dat (výsledky programu, žebříček hráčů, seznam registrovaných uživatelů, a pod.) - **Leaderboard tabulka**
+   7. Po přihlášení na web jako admin lze mazat data z databáze. - **Header**
+3. Aplikace v Pythonu - **napsáno v něčem jiném**
+   1. Grafické rozhraní - např. v PyQt - **React + Electron**
+   2. Grafické zobrazení - např. Pygame či knihovna pro zobrazení grafů a jejich zpracování a pod. - **React mi umožňuje graficky znázorňovat, na které otázky uživatel správně odpověděl a označuje je zeleně či červeně. Dále je dobré zmínit nadstandardní vytváření samotného kvízů a jeho grafické zobrazení.**
+   3. Ukládá a načítá data z/do databáze - výsledky hry/výpočtu, záznamy o použití a pod. - **vytváření a vyplňování kvízů**
+   4. Ukládá a načítá data z/do souboru - např. uživatelské nastavení, poslední použité hodnoty a pod. - **backend má appsettings.json, do kterého se musí zadat potřebné konstanty před spuštěním (ovlivňuje chod celé aplikace)**
+   5. Dokumentace kódu dle konvencí jazyka - minimálně dokumentace funkcí a tříd - NEMÁM
+4. Databáze
+   1. K databázi je zakreslen ER-diagram - **Sekce "O projektu"**
+   2. Využívá vztahy typu 1:N i M:N (tedy i JOIN při čtení dat) - **Sekce "O projektu"**
+   3. Má vytvořené skripty pro tvorbu tabulek (CREATE), vložení několika vzorových dat (INSERT) do každé tabulky (např. 3 záznamy do každé tabulky) a získání vzorových dat z tabulek (SELECT, JOIN) včetně filtrování, řazení, seskupování a vyhledávání - **V backendu je podadresář Scripts v adresáři Database, které se spouští vždy, když není vytvořená databáze**
+   4. Využívá atributy (datový typ, UNIQUE, NOT NULL, AUTO_INCREMENT, PK, FK, DEFAULT) - **Využívám**
+   5. Upravuje data v databázi (UPDATE, DELETE) - **Ano**
+   6. Rozumí nastavení DELETE ON CASCADE - **Rozumím**
+   7. Databáze je normalizovaná minimálně po Boyceho-Coddovu normu viz také Normalizace databáze - **Ano**
+   8. S databází komunikuje přes webové rozhraní (připravené dotazy), vlastní webové stránky i přes Python - **Ano**
 ## Ukázky použití
 
 ### Veřejná tabulka

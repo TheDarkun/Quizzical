@@ -69,7 +69,7 @@
    2. Grafické zobrazení - např. Pygame či knihovna pro zobrazení grafů a jejich zpracování a pod. - **React mi umožňuje graficky znázorňovat, na které otázky uživatel správně odpověděl a označuje je zeleně či červeně. Dále je dobré zmínit nadstandardní vytváření samotného kvízů a jeho grafické zobrazení.**
    3. Ukládá a načítá data z/do databáze - výsledky hry/výpočtu, záznamy o použití a pod. - **vytváření a vyplňování kvízů**
    4. Ukládá a načítá data z/do souboru - např. uživatelské nastavení, poslední použité hodnoty a pod. - **backend má appsettings.json, do kterého se musí zadat potřebné konstanty před spuštěním (ovlivňuje chod celé aplikace)**
-   5. Dokumentace kódu dle konvencí jazyka - minimálně dokumentace funkcí a tříd - NEMÁM
+   5. Dokumentace kódu dle konvencí jazyka - minimálně dokumentace funkcí a tříd - Ano~
 4. Databáze
    1. K databázi je zakreslen ER-diagram - **Sekce "O projektu"**
    2. Využívá vztahy typu 1:N i M:N (tedy i JOIN při čtení dat) - **Sekce "O projektu"**
